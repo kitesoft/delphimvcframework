@@ -2702,9 +2702,12 @@ var
 begin
   lUnitOfWork := TMVCUnitOfWork<T>.Create;
   lUnitOfWork.RegisterDelete(CurrentList);
-  lPKType := NewList[i].GetPrimaryKeyFieldType;
+  lPKType :=ftUnknown;
   for i := 0 to NewList.Count - 1 do
   begin
+     if lPKType=ftUnknown then
+        lPKType:=NewList[i].GetPrimaryKeyFieldType;
+
     if NewList[i].PKIsNull then
     begin
       lUnitOfWork.RegisterInsert(NewList[i]);
